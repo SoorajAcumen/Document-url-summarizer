@@ -17,7 +17,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "officeparser": "^4.2.0"
+    "officeparser": "^4.2.0",
+    "pdf_analyser": "file:"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

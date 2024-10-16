@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const { analyze_pdf } = require("./utils/vertexAi");
-const { generateFromVertexAi } = require("./utils/geminiAi")
 require("dotenv").config()
+
+const { generateFromGeminiAi } = require("./utils/geminiAi")
+const { generateFromVertexAI } = require("./utils/vertexAi")
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
     try {
-        const result = await generateFromVertexAi("https://storage.googleapis.com/moksh-dev/word-doc.docx")
+        const result = await generateFromGeminiAi("https://storage.googleapis.com/moksh-dev/word-doc.docx")
         res.status(200).json({ result })
     } catch (error) {
         console.log(error)
@@ -24,7 +25,7 @@ app.get("/", async (req, res) => {
 
 app.get("/pdf", async (req, res) => {
     try {
-        const result = await analyze_pdf("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf")
+        const result = await generateFromVertexAI("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf")
         res.status(200).json({result})
     } catch (error) {
         console.log(error)

@@ -19,7 +19,7 @@ const geminiPromptModel = googleAI.getGenerativeModel({
     geminiConfig,
 });
 
-const generateFromVertexAi = async (url) => {
+const generateFromGeminiAi = async (url) => {
     try {
         let text = await extractTextFromDocuments(url);
         const prompt = text + "Can you summarize this document as a bulleted list."
@@ -64,4 +64,4 @@ const parseDocumentAsync = (bufferData) => {
     });
 };
 
-module.exports = { generateFromVertexAi }
+module.exports = { generateFromGeminiAi }
