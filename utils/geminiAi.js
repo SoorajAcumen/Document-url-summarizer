@@ -22,7 +22,7 @@ const geminiPromptModel = googleAI.getGenerativeModel({
 const generateFromGeminiAi = async (url) => {
     try {
         let text = await extractTextFromDocuments(url);
-        const prompt = text + "Can you summarize this document as a bulleted list."
+        const prompt = text + " You are a very professional document summarization specialist. Please summarize the given document."
         const result = await geminiPromptModel.generateContent(prompt);
         const response = result.response.text()
         return response

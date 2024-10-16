@@ -12,10 +12,18 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => res.send("Document url summarizer"))
 
-app.get("/", async (req, res) => {
+app.get("/doc", async (req, res) => {
     try {
-        const result = await generateFromGeminiAi("https://storage.googleapis.com/moksh-dev/word-doc.docx")
+        const { url } = req.query
+        let result ;
+        const fileExtension = url?.split('.').pop().split(/\#|\?/)[0];
+        if (fileExtension == 'pdf') {
+            result = await generateFromVertexAI(url)
+        } else {
+            result = await generateFromGeminiAi(url)
+        }
         res.status(200).json({ result })
     } catch (error) {
         console.log(error)
@@ -23,9 +31,10 @@ app.get("/", async (req, res) => {
     }
 })
 
-app.get("/pdf", async (req, res) => {
+app.get("/pdf/:url", async (req, res) => {
     try {
-        const result = await generateFromVertexAI("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf")
+        const { url } = req.params
+        const result = await generateFromVertexAI(url)
         res.status(200).json({result})
     } catch (error) {
         console.log(error)
