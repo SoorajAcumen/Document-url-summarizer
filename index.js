@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const { marked } = require("marked");
 require("dotenv").config()
 
 const { generateFromGeminiAi } = require("./utils/geminiAi")
-const { generateFromVertexAI } = require("./utils/vertexAi")
+const { generateFromVertexAI } = require("./utils/vertexAi");
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -24,7 +25,8 @@ app.get("/doc", async (req, res) => {
         } else {
             result = await generateFromGeminiAi(url)
         }
-        res.status(200).json({ result })
+        const htmlContent = marked(result);
+        res.status(200).send(htmlContent)
     } catch (error) {
         console.log(error)
         res.status(500).json({ error })

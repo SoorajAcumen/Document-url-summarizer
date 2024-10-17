@@ -20,7 +20,7 @@ const generateFromVertexAI = async (url) => {
         const textPart = {
             text: `
     You are a very professional document summarization specialist.
-    Please summarize the given document.`,
+    Please summarize the given document by bulleted list.`,
         };
 
         const request = {
@@ -28,7 +28,7 @@ const generateFromVertexAI = async (url) => {
         };
 
         const resp = await generativeModel.generateContent(request);
-        const contentResponse = resp.response;
+        const contentResponse = resp.response?.candidates[0]?.content?.parts[0]?.text;
         return contentResponse
         
     } catch (error) {
